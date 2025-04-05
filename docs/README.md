@@ -121,7 +121,7 @@
 
 Выберите тип обращения:
 
-- [Сообщить об ошибке](https://github.com/cleaning-corp/services/issues/new?template=bug_report.md)
+- [Сообщить об ошибке](https://github.com/cleaning-corp/services/issues/template=bug_report.md)
 - [Предложить улучшение](https://github.com/cleaning-corp/services/issues/new?template=feature_request.md)
 - [Задать вопрос](https://github.com/cleaning-corp/services/issues/new?template=question.md)
 - [Сообщить об уязвимости](SECURITY.md)
