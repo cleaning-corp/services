@@ -54,7 +54,7 @@
   <tr>
     <td align="center" width="110" height="90">
       <a href="#oberlevd-stack">
-        <img src="https://github.com/devicons/devicon/blob/master/icons/redis/redis-original.svg" width="36" height="36" alt="OpenAPI" />
+        <img src="https://github.com/devicons/devicon/blob/master/icons/openapi/openapi-original.svg" width="36" height="36" alt="OpenAPI" />
       </a>
       <br>OpenAPI
     </td>
