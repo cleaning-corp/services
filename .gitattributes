@@ -1,0 +1,8 @@
+*.yaml text eol=lf
+*.yml  text eol=lf
+
+*.yaml diff
+*.yml  diff
+
+*.yaml linguist-detectable=true
+*.yml  linguist-detectable=true

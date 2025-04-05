@@ -1,0 +1,13 @@
+.idea/
+
+.git/
+docs/
+
+.czrc
+.editorconfig
+.env.example
+
+.gitattributes
+.gitignore
+
+openapi.yml

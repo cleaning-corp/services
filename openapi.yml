@@ -1,0 +1,386 @@
+openapi: 3.0.3
+info:
+  title: Cleaning Company Services API
+  description: API для управления услугами клининговой компании с использованием JWT-аутентификации.
+  version: 1.0.0
+  contact:
+    name: Поддержка
+    email: denioberlev@gmail.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:8081/v1
+    description: Локальный сервер для разработки микросервиса услуг
+tags:
+  - name: services
+    description: Методы для работы с услугами
+paths:
+  /services:
+    get:
+      tags:
+        - services
+      summary: Список услуг
+      description: Возвращает полный список всех доступных услуг. Требуется JWT-токен с правами администратора.
+      responses:
+        "200":
+          description: Список услуг
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Service"
+        "401":
+          description: Неавторизован
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Unauthorized"
+        "403":
+          description: Доступ запрещён
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Forbidden"
+    post:
+      tags:
+        - services
+      summary: Добавить услугу
+      description: Добавляет новую услугу в систему. Требуется JWT-токен с правами администратора.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Service"
+      responses:
+        "201":
+          description: Услуга успешно создана
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+        "401":
+          description: Неавторизован
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Unauthorized"
+        "403":
+          description: Доступ запрещён
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Forbidden"
+  /services/{serviceId}:
+    get:
+      tags:
+        - services
+      summary: Получить услугу
+      description: Возвращает информацию о конкретной услуге. Требуется JWT-токен с правами администратора.
+      parameters:
+        - name: serviceId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Информация об услуге
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+        "401":
+          description: Неавторизован
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Unauthorized"
+        "403":
+          description: Доступ запрещён
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Forbidden"
+        "404":
+          description: Услуга не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Service not found"
+    put:
+      tags:
+        - services
+      summary: Полностью обновить услугу
+      description: |
+        Обновляет все поля услуги. Требуется передать полное тело запроса (все обязательные поля).
+        Требуется JWT-токен с правами администратора.
+      parameters:
+        - name: serviceId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Service"
+      responses:
+        "200":
+          description: Услуга успешно обновлена
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+        "400":
+          description: Неверный запрос (отсутствуют обязательные поля)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "All fields (id, name, price) are required for PUT"
+        "401":
+          description: Неавторизован
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Unauthorized"
+        "403":
+          description: Доступ запрещён
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Forbidden"
+        "404":
+          description: Услуга не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Service not found"
+    patch:
+      tags:
+        - services
+      summary: Частично обновить услугу
+      description: |
+        Обновляет указанные поля услуги (name, description и/или price).
+        Требуется JWT-токен с правами администратора.
+        ID услуги обязателен в теле запроса и должен совпадать с параметром пути.
+      parameters:
+        - name: serviceId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: Уникальный идентификатор услуги (должен совпадать с serviceId в пути)
+                  example: 1
+                name:
+                  type: string
+                  description: Название услуги
+                  example: "Генеральная уборка"
+                  nullable: true
+                description:
+                  type: string
+                  description: Описание услуги
+                  example: "Полная уборка помещения с мытьём окон"
+                  nullable: true
+                price:
+                  type: number
+                  format: float
+                  description: Стоимость услуги в рублях
+                  example: 6000.00
+                  nullable: true
+              required:
+                - id
+              anyOf:
+                - required: [name]
+                - required: [description]
+                - required: [price]
+              additionalProperties: false
+      responses:
+        "200":
+          description: Услуга успешно обновлена
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+        "400":
+          description: |
+            Неверный запрос (ID не совпадает, не указано ни одного поля для обновления
+            или переданы недопустимые поля)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Request must contain id and at least one updatable field"
+        "401":
+          description: Неавторизован
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Unauthorized"
+        "403":
+          description: Доступ запрещён
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Forbidden"
+        "404":
+          description: Услуга не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Service not found"
+    delete:
+      tags:
+        - services
+      summary: Удалить услугу
+      description: Удаляет услугу из системы. Требуется JWT-токен с правами администратора.
+      parameters:
+        - name: serviceId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "204":
+          description: Услуга успешно удалена
+        "401":
+          description: Неавторизован
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Unauthorized"
+        "403":
+          description: Доступ запрещён
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Forbidden"
+        "404":
+          description: Услуга не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Service not found"
+components:
+  schemas:
+    Service:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Уникальный идентификатор услуги (автоинкремент)
+          example: 1
+        name:
+          type: string
+          description: Название услуги
+          example: "Генеральная уборка"
+        description:
+          type: string
+          description: Описание услуги
+          example: "Полная уборка помещения с мытьём окон"
+          nullable: true
+        price:
+          type: number
+          format: float
+          description: Стоимость услуги в рублях
+          example: 5000.00
+      required:
+        - id
+        - name
+        - price
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT-токен, содержащий информацию о пользователе и его правах. Требуется роль администратора для доступа.
+security:
+  - BearerAuth: []
