@@ -8,7 +8,7 @@
 
 Полная спецификация API: [openapi.yml](../openapi.yml)
 
-## 🔧 Технологии
+<h2 align="left" id="cleaning-stack">🔧 Технологии</h2>
 
 > DB
 
@@ -122,7 +122,7 @@
 Выберите тип обращения:
 
 - [Сообщить об ошибке](https://github.com/cleaning-corp/services/issues/new?template=bug_report.md)
-- [Предложить улучшение](https://github.com/cleaning-corp/services/issues/new?template=enhancement.md)
+- [Предложить улучшение](https://github.com/cleaning-corp/services/issues/new?template=feature_request.md)
 - [Задать вопрос](https://github.com/cleaning-corp/services/issues/new?template=question.md)
 - [Сообщить об уязвимости](SECURITY.md)
 
