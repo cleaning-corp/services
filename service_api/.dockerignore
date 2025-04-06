@@ -1,0 +1,12 @@
+﻿.idea/
+
+bin/
+obj/
+Properties/
+
+appsettings.*.json
+!appsettings.Example.json
+
+.git/
+.gitignore
+.gitattributes

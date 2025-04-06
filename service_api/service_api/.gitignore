@@ -1,0 +1,14 @@
+# Бинарники
+bin/
+obj/
+
+# Настройки проекта
+Properties/
+launchSettings.json
+
+# Файлы конфигурации приложения
+appsettings.json
+appsettings.*.json
+!appsettings.Example.json
+service_api.csproj.user
+

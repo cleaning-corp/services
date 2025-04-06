@@ -6,3 +6,7 @@
 
 *.yaml linguist-detectable=true
 *.yml  linguist-detectable=true
+
+*.cs      text eol=lf
+*.csproj  text eol=lf
+*.sln     text eol=lf
