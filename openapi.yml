@@ -10,7 +10,7 @@ info:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
-  - url: http://localhost:8081/v1
+  - url: http://localhost:8080/v1
     description: Локальный сервер для разработки микросервиса услуг
 tags:
   - name: services
@@ -167,7 +167,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Service"
         "400":
-          description: Неверный запрос (отсутствуют обязательные поля)
+          description: Неверный запрос (не совпадают id)
           content:
             application/json:
               schema:
@@ -175,7 +175,7 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "All fields (id, name, price) are required for PUT"
+                    example: "Ids do not match"
         "401":
           description: Неавторизован
           content:
